@@ -11,6 +11,11 @@ try {
     jest.spyOn(postService, 'getAllPosts').mockResolvedValue([
         { _id: 'p1', name: 'Sample', description: 'Desc', fileUrl: '/files/f1' }
     ]);
+
+    jest.spyOn(postService, 'deletePost').mockImplementation(async (id) => ({
+        message: 'Post deleted successfully',
+        deletedId: id
+    }));
 } catch { }
 
 let server, baseUrl;
@@ -32,7 +37,9 @@ test('Provider matches consumer contract for PostsAPI', async () => {
         pactUrls: [path.resolve(process.cwd(), 'pacts/PostsClient-PostsAPI.json')],
         // If you need to seed data for "posts exist", do it here:
         stateHandlers: {
-            'posts exist': async () => ({ description: 'seeded (stubbed)'  }),
+            'posts exist': async () => ({ description: 'seeded (stubbed)' }),
+
+            'post exists with id abc123': async () => ({ description: 'stubbed delete path' }),
         },
         // publishVerificationResult: false, // ⬅️ no providerVersion needed now
     });
@@ -40,3 +47,5 @@ test('Provider matches consumer contract for PostsAPI', async () => {
     const result = await verifier.verifyProvider();
     expect(/success/i.test(result) || /finished:\s*0/i.test(result)).toBe(true);
 }, 30000);
+
+

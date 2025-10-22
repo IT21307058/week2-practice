@@ -4,6 +4,58 @@
   },
   "interactions": [
     {
+      "description": "a request to delete a post",
+      "providerStates": [
+        {
+          "name": "post exists with id abc123"
+        }
+      ],
+      "request": {
+        "method": "DELETE",
+        "path": "/posts/abc123"
+      },
+      "response": {
+        "body": {
+          "deletedId": "abc123",
+          "message": "Post deleted successfully",
+          "requestId": "uuid-1234",
+          "success": true
+        },
+        "headers": {
+          "Content-Type": "application/json; charset=utf-8"
+        },
+        "matchingRules": {
+          "body": {
+            "$.deletedId": {
+              "combine": "AND",
+              "matchers": [
+                {
+                  "match": "type"
+                }
+              ]
+            },
+            "$.message": {
+              "combine": "AND",
+              "matchers": [
+                {
+                  "match": "type"
+                }
+              ]
+            },
+            "$.requestId": {
+              "combine": "AND",
+              "matchers": [
+                {
+                  "match": "type"
+                }
+              ]
+            }
+          }
+        },
+        "status": 200
+      }
+    },
+    {
       "description": "get posts",
       "providerStates": [
         {
