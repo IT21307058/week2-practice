@@ -127,3 +127,9 @@
 {"duration":"10ms","level":"info","message":"Outgoing Response","method":"GET","requestId":"e7ff489a-cdc0-4232-8ca3-e1d1702f9308","responseSize":91,"service":"post-service","statusCode":200,"timestamp":"2025-10-22 20:02:31","url":"/posts/"}
 {"level":"info","message":"::1 - - [22/Oct/2025:14:32:31 +0000] \"GET /posts/ HTTP/1.1\" 200 73 \"-\" \"-\"","service":"post-service","timestamp":"2025-10-22 20:02:31"}
 {"duration":"15ms","level":"info","message":"Request Completed","method":"GET","requestId":"e7ff489a-cdc0-4232-8ca3-e1d1702f9308","service":"post-service","statusCode":200,"timestamp":"2025-10-22 20:02:31","url":"/posts/"}
+{"body":{},"ip":"::1","level":"info","message":"Incoming Request","method":"GET","requestId":"4b633783-9f87-4890-bb17-49f2cdecbb12","service":"post-service","timestamp":"2025-10-22 20:04:30","url":"/posts/"}
+{"level":"info","message":"Get posts request received","requestId":"4b633783-9f87-4890-bb17-49f2cdecbb12","service":"post-service","timestamp":"2025-10-22 20:04:30"}
+{"duration":"9ms","level":"info","message":"Outgoing Response","method":"GET","requestId":"4b633783-9f87-4890-bb17-49f2cdecbb12","responseSize":73,"service":"post-service","statusCode":200,"timestamp":"2025-10-22 20:04:30","url":"/posts/"}
+{"duration":"12ms","level":"info","message":"Outgoing Response","method":"GET","requestId":"4b633783-9f87-4890-bb17-49f2cdecbb12","responseSize":91,"service":"post-service","statusCode":200,"timestamp":"2025-10-22 20:04:30","url":"/posts/"}
+{"level":"info","message":"::1 - - [22/Oct/2025:14:34:30 +0000] \"GET /posts/ HTTP/1.1\" 200 73 \"-\" \"-\"","service":"post-service","timestamp":"2025-10-22 20:04:30"}
+{"duration":"17ms","level":"info","message":"Request Completed","method":"GET","requestId":"4b633783-9f87-4890-bb17-49f2cdecbb12","service":"post-service","statusCode":200,"timestamp":"2025-10-22 20:04:30","url":"/posts/"}

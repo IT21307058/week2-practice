@@ -1,9 +1,4 @@
 // tests/provider/posts.provider.verify.test.js
-
-// 🔒 ensure publishing is OFF no matter what .env says
-delete process.env.PACT_PUBLISH_VERIFICATION_RESULTS;
-delete process.env.PACT_PROVIDER_VERSION;
-
 const path = require('path');
 const http = require('http');
 const { Verifier } = require('@pact-foundation/pact');
