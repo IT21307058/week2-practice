@@ -1,0 +1,1 @@
+module.exports = { CREATED: 'POST_CREATED', DELETED: 'POST_DELETED' };

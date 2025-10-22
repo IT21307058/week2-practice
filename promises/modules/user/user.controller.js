@@ -1,68 +1,98 @@
+
 const userService = require("./user.service");
+const logger = require("../../config/logger");
 
 class AuthController {
-    async register(req, res) {
+    async register(req, res, next) {
+        const requestId = req.id || `req-${Date.now()}`;
+
         try {
             const { username, email, password } = req.body;
 
-            // Validation
-            if (!username || !email || !password) {
-                return res.status(400).json({
-                    message: 'Username, email and password are required'
-                });
-            }
+            logger.info('Register request received', {
+                requestId,
+                username,
+                email,
+            });
 
-            if (password.length < 6) {
-                return res.status(400).json({
-                    message: 'Password must be at least 6 characters'
-                });
-            }
+            const result = await userService.register(username, email, password, requestId);
 
-            const result = await userService.register(username, email, password);
+            logger.info('Register request completed successfully', {
+                requestId,
+                userId: result.user.id,
+            });
+
             res.status(201).json(result);
-        } catch (err) {
-            console.error(err);
+        } catch (error) {
+            logger.error('Register request failed', {
+                requestId,
+                error: error.message,
+                stack: error.stack,
+            });
 
-            if (err.message === 'Email already registered' ||
-                err.message === 'Username already taken') {
-                return res.status(400).json({ message: err.message });
-            }
-
-            res.status(500).json({ message: 'Internal server error' });
+            // Pass to error handling middleware
+            next(error);
         }
     }
 
-    async login(req, res) {
+    async login(req, res, next) {
+        const requestId = req.id || `req-${Date.now()}`;
+
         try {
             const { email, password } = req.body;
 
-            // Validation
-            if (!email || !password) {
-                return res.status(400).json({
-                    message: 'Email and password are required'
-                });
-            }
+            logger.info('Login request received', {
+                requestId,
+                email,
+            });
 
-            const result = await userService.login(email, password);
+            const result = await userService.login(email, password, requestId);
+
+            logger.info('Login request completed successfully', {
+                requestId,
+                userId: result.user.id,
+            });
+
             res.json(result);
-        } catch (err) {
-            console.error(err);
+        } catch (error) {
+            logger.error('Login request failed', {
+                requestId,
+                error: error.message,
+                stack: error.stack,
+            });
 
-            if (err.message === 'Invalid email or password') {
-                return res.status(401).json({ message: err.message });
-            }
-
-            res.status(500).json({ message: 'Internal server error' });
+            // Pass to error handling middleware
+            next(error);
         }
     }
 
-    async getMe(req, res) {
+    async getMe(req, res, next) {
+        const requestId = req.id || `req-${Date.now()}`;
+
         try {
-            const user = await userService.getUserById(req.userId);
+            logger.info('Get current user request received', {
+                requestId,
+                userId: req.userId,
+            });
+
+            const user = await userService.getUserById(req.userId, requestId);
+
+            logger.info('Get current user request completed successfully', {
+                requestId,
+                userId: user.id,
+            });
+
             res.json(user);
-        } catch (err) {
-            console.error(err);
-            res.status(500).json({ message: 'Internal server error' });
+        } catch (error) {
+            logger.error('Get current user request failed', {
+                requestId,
+                userId: req.userId,
+                error: error.message,
+                stack: error.stack,
+            });
+
+            // Pass to error handling middleware
+            next(error);
         }
     }
 }

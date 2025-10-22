@@ -4,7 +4,8 @@
   "main": "index.js",
   "scripts": {
     "start": "node index.js",
-    "dev": "nodemon index.js"
+    "dev": "nodemon index.js",
+    "test": "jest --runInBand"
   },
   "keywords": [],
   "author": "",
@@ -27,5 +28,9 @@
     "sequelize": "^6.37.7",
     "uuid": "^13.0.0",
     "winston": "^3.18.3"
+  },
+  "devDependencies": {
+    "@types/jest": "^30.0.0",
+    "jest": "^30.2.0"
   }
 }

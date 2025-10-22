@@ -9,13 +9,6 @@ class PostService {
     async uploadMedia(file, name, description, requestId) {
 
         try {
-            logger.info('Starting media upload', {
-                requestId,
-                filename: file.originalname,
-                size: file.size,
-                mimetype: file.mimetype,
-            });
-
             // Validation
             if (!file) {
                 throw new ValidationError('No file provided');
@@ -24,6 +17,13 @@ class PostService {
             if (!name || !description) {
                 throw new ValidationError('Name and description are required');
             }
+
+            logger.info('Starting media upload', {
+                requestId,
+                filename: file.originalname,
+                size: file.size,
+                mimetype: file.mimetype,
+            });
 
             // Sequential: do A → then B → then C (each waits for the previous).
             const savedFile = await postRepository.saveFile(file);
@@ -66,7 +66,7 @@ class PostService {
         }
     }
 
-    async getAllPosts() {
+    async getAllPosts(requestId) {
         try {
             logger.info('Fetching all posts', { requestId });
 
@@ -124,7 +124,7 @@ class PostService {
         }
     }
 
-    async deletePost(id) {
+    async deletePost(id, requestId) {
         try {
             logger.info('Starting post deletion', {
                 requestId,
