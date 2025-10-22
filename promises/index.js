@@ -73,15 +73,19 @@ app.use(notFoundHandler);
 // Global error handler - handles all errors
 app.use(errorHandler);
 
-(async () => {
-  try {
-    await sequelize.authenticate();
-    console.log('PostgreSQL connected');
 
-    await connectDB();
+module.exports = app;
 
-    app.listen(port, () => console.log(`Server started on port ${port}`));
-  } catch (err) {
-    console.error('Database connection error:', err);
-  }
-})();
+if (require.main === module) {
+  (async () => {
+    try {
+      await connectDB();
+      const port = process.env.PORT || 5000;
+      app.listen(port, () => console.log(`Server started on port ${port}`));
+    } catch (err) {
+      console.error('Startup error:', err);
+      process.exit(1);
+    }
+  })();
+}
+// module.exports = app;

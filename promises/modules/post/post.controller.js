@@ -34,13 +34,14 @@ class PostController {
 
         const posts = await postService.getAllPosts(req.id);
 
-        res.status(200).json({
-            success: true,
-            message: 'Posts retrieved successfully',
-            data: posts,
-            count: posts.length,
-            requestId: req.id,
-        });
+        const minimal = posts.map(p => ({
+            _id: p._id || p.id,
+            name: p.name,
+            description: p.description,
+            fileUrl: p.fileUrl
+        }));
+
+        return res.status(200).json(minimal);
     });
 
     deletePost = asyncHandler(async (req, res) => {
